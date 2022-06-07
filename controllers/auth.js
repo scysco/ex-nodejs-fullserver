@@ -5,6 +5,15 @@ const { generateJWT } = require("../helpers/generate-jwt");
 const { googleVerify } = require("../helpers/google-verify");
 const User = require("../models/user");
 
+const reToken = async(req,res = response) =>{
+  const {user} = req;
+  const token = await generateJWT(user.id);
+  res.json({
+    user,
+    token
+  });
+}
+
 const login = async(req,res = response) =>{
     const{mail,password} = req.body;
     
@@ -86,5 +95,6 @@ const googleSignIn = async(req,res = response) =>{
 
 module.exports = {
     login,
-    googleSignIn
+    googleSignIn,
+    reToken
 }
